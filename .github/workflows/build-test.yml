@@ -54,6 +54,29 @@ jobs:
         name: Test Results
         path: test-result-*.xml
 
+  sonar:
+    name: Sonar
+    needs: [build_test]
+    permissions:
+      contents: read
+      checks: write
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: test-result-ubuntu-latest-unit.xml
+
+    - name: SonarCloud Scan
+      if: ${{matrix.os}} == 'ubuntu-latest'
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
   upload_event:
     name: "Upload Event File"
     runs-on: ubuntu-latest
