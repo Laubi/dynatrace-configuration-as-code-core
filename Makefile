@@ -2,12 +2,7 @@
 
 default: test
 
-setup:
-	@echo "Installing build tools..."
-	@go install github.com/google/addlicense@v1.1.1
-	@go install gotest.tools/gotestsum@v1.10.1
-
-lint: setup
+lint:
 ifeq ($(OS),Windows_NT)
 	@.\tools\check-format.cmd
 else
@@ -43,15 +38,14 @@ compile:
 	@echo "Compiling tests..."
 	@go test -run "NON_EXISTENT_TEST_TO_ENSURE_NOTHING_RUNS_BUT_ALL_COMPILE" ./...
 
-test: setup
+setup-tests:
+	@go install gotest.tools/gotestsum@v1.10.1
+
+test: setup-tests
 	@echo "Testing $(BINARY_NAME)..."
 	@gotestsum ${testopts} -- -v -race ./...
 
-test-fast: setup
+test-fast: setup-tests
+	@go install gotest.tools/gotestsum@v1.10.1
 	@echo "Testing short tests $(BINARY_NAME)..."
 	@gotestsum ${testopts} -- -v -race -short ./...
-
-update-dependencies:
-	@echo Update go dependencies
-	@go get -u ./...
-	@go mod tidy
