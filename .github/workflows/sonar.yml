@@ -1,4 +1,4 @@
-name: Build and Test
+name: Sonar
 
 # This workflow builds the code and runs the unit tests and integration tests.
 #
@@ -37,7 +37,10 @@ jobs:
       run: go test -coverprofile=cov.out ./...
 
     - name: Linter
-      run: golangci-lint run ./... --out-format=checkstyle --print-issued-lines=false --print-linter-name=false --issues-exit-code=0 --enable=revive > golanci-report.xml
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+        args: --out-format=checkstyle --print-issued-lines=false --print-linter-name=false --issues-exit-code=0 --enable=revive > golanci-report.xml
 
     - name: SonarCloud Scan
       if: ${{matrix.os}} == 'ubuntu-latest'
