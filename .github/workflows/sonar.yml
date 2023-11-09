@@ -36,6 +36,8 @@ jobs:
     - name: Run tests with coverage
       run: go test -coverprofile=cov.out ./...
 
+    - name: Linter
+      run: golangci-lint run ./... --out-format=checkstyle --print-issued-lines=false --print-linter-name=false --issues-exit-code=0 --enable=revive > golanci-report.xml
 
     - name: SonarCloud Scan
       if: ${{matrix.os}} == 'ubuntu-latest'
