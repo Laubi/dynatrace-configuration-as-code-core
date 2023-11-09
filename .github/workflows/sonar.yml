@@ -36,11 +36,11 @@ jobs:
     - name: Run tests with coverage
       run: go test -coverprofile=cov.out ./...
 
+    - name: Install linter
+      run: "go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2"
+
     - name: Linter
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: latest
-        args: --out-format=checkstyle --print-issued-lines=false --print-linter-name=false --issues-exit-code=0 --enable=revive > golanci-report.xml
+      run: golangci-lint run ./... --out-format=checkstyle > golanci-report.xml
 
     - name: SonarCloud Scan
       if: ${{matrix.os}} == 'ubuntu-latest'
