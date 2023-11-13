@@ -40,7 +40,9 @@ jobs:
       run: "go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2"
 
     - name: Linter
-      run: golangci-lint run ./... --out-format=checkstyle --config=.golangci.yaml > golangci-report.xml
+      run: |
+        touch golangci-report.xml
+        golangci-lint run ./... --out-format=checkstyle --config=.golangci.yaml >> golangci-report.xml
 
     - name: SonarCloud Scan
       if: ${{matrix.os}} == 'ubuntu-latest'
