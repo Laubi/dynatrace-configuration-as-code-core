@@ -42,7 +42,7 @@ jobs:
     - name: Linter
       run: |
         touch golangci-report.xml
-        golangci-lint run ./... --out-format=checkstyle --config=.golangci.yaml >> golangci-report.xml
+        golangci-lint run ./... --out-format=checkstyle --config=.golangci.yaml
 
     - name: SonarCloud Scan
       if: ${{matrix.os}} == 'ubuntu-latest'
