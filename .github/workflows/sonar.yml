@@ -41,7 +41,7 @@ jobs:
       uses: golangci/golangci-lint-action@v3
       with:
         version: v1.54
-        args: --config=.golangci.yml --issues-exit-code=0 --out-format=checkstyle:golangci-report.xml
+        args: --config=.golangci.yaml --issues-exit-code=0 --out-format=checkstyle:golangci-report.xml
 
     - name: SonarCloud Scan
       if: ${{matrix.os}} == 'ubuntu-latest'
