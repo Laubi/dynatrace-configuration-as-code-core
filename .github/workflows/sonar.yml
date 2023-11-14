@@ -43,8 +43,9 @@ jobs:
         version: v1.54
         args: --config=.golangci.yaml --issues-exit-code=0 --out-format=checkstyle:golangci-report.xml
 
+    - run: ls -aAl
+
     - name: SonarCloud Scan
-      if: ${{matrix.os}} == 'ubuntu-latest'
       uses: SonarSource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
