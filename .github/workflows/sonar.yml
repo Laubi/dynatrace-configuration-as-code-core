@@ -43,7 +43,10 @@ jobs:
         version: v1.54
         args: --config=.golangci.yaml --issues-exit-code=0 --out-format=checkstyle:golangci-report.xml
 
-    - run: ls -aAl
+    - uses: actions/upload-artifact@v3
+      with:
+        name: golangci-report.xml
+        path: golangci-report.xml
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
