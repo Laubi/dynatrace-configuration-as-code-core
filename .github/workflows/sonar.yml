@@ -19,8 +19,8 @@ defaults:
     shell: bash
 
 jobs:
-  build_test:
-    name: Build and Test
+  sonar:
+    name: Sonar
     permissions:
       contents: read
       checks: write
